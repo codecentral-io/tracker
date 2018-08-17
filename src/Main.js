@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./Home";
-
-const Settings = () => <div>Settings</div>;
+import Settings from "./Settings";
 
 const NotFound = ({ location }) => (
   <div>
