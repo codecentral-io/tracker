@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-
-const Home = () => <div>Home</div>;
+import Home from "./Home";
 
 const Settings = () => <div>Settings</div>;
 
