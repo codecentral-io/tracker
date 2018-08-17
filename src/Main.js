@@ -4,8 +4,8 @@ import Home from "./Home";
 import Settings from "./Settings";
 
 const NotFound = ({ location }) => (
-  <div>
-    No page found for <code>{location.pathname}</code>.
+  <div className="h3 text-center my-3">
+    Error: No page found for <code>{location.pathname}</code>.
   </div>
 );
 
