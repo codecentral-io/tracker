@@ -1,16 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
+import Main from "./Main";
 import Navbar from "./Navbar";
-
-const Home = () => <div>Home</div>;
-
-const Settings = () => <div>Settings</div>;
-
-const NotFound = ({ location }) => (
-  <div>
-    No page found for <code>{location.pathname}</code>.
-  </div>
-);
 
 class App extends Component {
   componentDidMount() {
@@ -21,13 +11,7 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar />
-        <main className="container">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/settings" component={Settings} />
-            <Route component={NotFound} />
-          </Switch>
-        </main>
+        <Main />
       </Fragment>
     );
   }
