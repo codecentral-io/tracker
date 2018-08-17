@@ -10,12 +10,30 @@ const NotFound = ({ location }) => (
 );
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      units: {
+        balance: "bitcoin",
+        earnings: "bits"
+      }
+    };
+  }
+
+  updateUnits = units => {
+    this.setState({ units: units });
+  };
+
   render() {
     return (
       <main className="container">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/settings" component={Settings} />
+          <Route
+            exact
+            path="/settings"
+            render={props => <Settings {...props} units={this.state.units} updateUnits={this.updateUnits} />}
+          />
           <Route component={NotFound} />
         </Switch>
       </main>
