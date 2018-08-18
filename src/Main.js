@@ -28,7 +28,7 @@ class Main extends Component {
     return (
       <main className="container">
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={props => <Home {...props} units={this.state.units} />} />
           <Route
             exact
             path="/settings"
