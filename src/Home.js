@@ -61,12 +61,17 @@ class Balance extends Component {
   }
 
   render() {
+    const wrap = interior => (
+      <Fragment>
+        <div className="h4 my-3 text-center">Account Balance</div>
+        <div className="bg-white border rounded my-3 p-3">{interior}</div>
+      </Fragment>
+    );
+
     if (!this.state.data.length) {
-      return (
-        <div className="bg-white border rounded my-3 p-3">
-          <div className="text-center" style={{ fontSize: "1.25em" }}>
-            Loading...
-          </div>
+      return wrap(
+        <div className="text-center" style={{ fontSize: "1.25em" }}>
+          Loading...
         </div>
       );
     } else {
@@ -80,8 +85,8 @@ class Balance extends Component {
         parseFloat(row[1]) + parseFloat(row[2]) + parseFloat(row[3])
       ]);
       const chartOptions = getChartOptions("Total", chartData, this.props.unit);
-      return (
-        <div className="bg-white border rounded my-3 p-3">
+      return wrap(
+        <Fragment>
           <div className="row text-center">
             <div className="col-6 col-sm-3 mb-3">
               <div className="text-muted">Unused</div>
@@ -101,7 +106,7 @@ class Balance extends Component {
             </div>
           </div>
           <HighchartsReact highcharts={Highcharts} constructorType={"stockChart"} options={chartOptions} />
-        </div>
+        </Fragment>
       );
     }
   }
@@ -111,7 +116,6 @@ class Home extends Component {
   render() {
     return (
       <Fragment>
-        <div className="h4 my-3 text-center">Account Balance</div>
         <Balance unit={this.props.units.balance} />
       </Fragment>
     );
