@@ -2,10 +2,16 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
 import React, { Component, Fragment } from "react";
 
-const formatAmount = (amount, unit) =>
+const formatAmount = (amount, unit, decimals) =>
   unit === "bitcoin"
-    ? amount.toLocaleString("en-US", { maximumFractionDigits: 4 }) + " BTC"
-    : (1e6 * amount).toLocaleString("en-US", { maximumFractionDigits: 2 }) + " bits";
+    ? amount.toLocaleString("en-US", {
+        minimumFractionDigits: decimals || 0,
+        maximumFractionDigits: decimals || 4
+      }) + " BTC"
+    : (1e6 * amount).toLocaleString("en-US", {
+        minimumFractionDigits: decimals || 0,
+        maximumFractionDigits: decimals || 2
+      }) + " bits";
 
 const formatDuration = days => {
   let seconds = days * 24 * 60 * 60;
@@ -348,13 +354,9 @@ class Loans extends Component {
                   <td>
                     {row.close.split(" ")[0]} <span className="d-none d-md-inline">{row.close.split(" ")[1]}</span>
                   </td>
-                  <td className="d-none d-sm-table-cell">
-                    {row.amount} {row.currency}
-                  </td>
+                  <td className="d-none d-sm-table-cell">{formatAmount(parseFloat(row.amount), "bitcoin", 8)}</td>
                   <td className="d-none d-sm-table-cell">{(100 * parseFloat(row.rate)).toFixed(4)}%</td>
-                  <td>
-                    {row.earned} {row.currency}
-                  </td>
+                  <td>{formatAmount(parseFloat(row.earned), this.props.unit)}</td>
                 </tr>
                 <tr>
                   <td colSpan="4" className="border-top-0 py-0">
@@ -364,19 +366,11 @@ class Loans extends Component {
                         <div>Open: {new Date(Date.parse(row.open + "Z")).toLocaleString()}</div>
                         <div>Close: {new Date(Date.parse(row.close + "Z")).toLocaleString()}</div>
                         <div>Duration: {formatDuration(row.duration)}</div>
-                        <div>
-                          Amount: {row.amount} {row.currency}
-                        </div>
+                        <div>Amount: {formatAmount(parseFloat(row.amount), "bitcoin", 8)}</div>
                         <div>Rate: {(100 * parseFloat(row.rate)).toFixed(4)}%</div>
-                        <div>
-                          Interest: {row.interest} {row.currency}
-                        </div>
-                        <div>
-                          Fee: {row.fee} {row.currency}
-                        </div>
-                        <div>
-                          Earned: {row.earned} {row.currency}
-                        </div>
+                        <div>Interest: {formatAmount(parseFloat(row.interest), this.props.unit)}</div>
+                        <div>Fee: {formatAmount(parseFloat(row.fee), this.props.unit)}</div>
+                        <div>Earned: {formatAmount(parseFloat(row.earned), this.props.unit)}</div>
                       </div>
                     </div>
                   </td>
@@ -395,7 +389,7 @@ class Home extends Component {
       <Fragment>
         <Balance unit={this.props.units.balance} />
         <Earnings unit={this.props.units.earnings} />
-        <Loans />
+        <Loans unit={this.props.units.earnings} />
       </Fragment>
     );
   }
