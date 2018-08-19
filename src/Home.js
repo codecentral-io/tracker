@@ -329,8 +329,12 @@ class Loans extends Component {
         <thead>
           <tr>
             <th scope="col">Close</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Rate</th>
+            <th scope="col" className="d-none d-sm-table-cell">
+              Amount
+            </th>
+            <th scope="col" className="d-none d-sm-table-cell">
+              Rate
+            </th>
             <th scope="col">Earned</th>
           </tr>
         </thead>
@@ -341,11 +345,13 @@ class Loans extends Component {
             .map((row, i) => (
               <Fragment key={i}>
                 <tr data-toggle="collapse" data-target={`#collapse-${i}`} style={{ cursor: "pointer" }}>
-                  <td>{row.close}</td>
                   <td>
+                    {row.close.split(" ")[0]} <span className="d-none d-md-inline">{row.close.split(" ")[1]}</span>
+                  </td>
+                  <td className="d-none d-sm-table-cell">
                     {row.amount} {row.currency}
                   </td>
-                  <td>{(100 * parseFloat(row.rate)).toFixed(4)}%</td>
+                  <td className="d-none d-sm-table-cell">{(100 * parseFloat(row.rate)).toFixed(4)}%</td>
                   <td>
                     {row.earned} {row.currency}
                   </td>
