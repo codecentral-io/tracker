@@ -162,19 +162,19 @@ const PerPeriodEarnings = ({ data, unit }) => {
       <div className="row text-center">
         <div className="col-6 mb-3">
           <div className="text-muted">Average hourly</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(hourlyMean, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(hourlyMean, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Average daily</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(dailyMean, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(dailyMean, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Median hourly</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(hourlyMedian, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(hourlyMedian, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Median daily</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(dailyMedian, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(dailyMedian, unit)}</div>
         </div>
       </div>
       <HighchartsReact highcharts={Highcharts} constructorType={"stockChart"} options={chartOptions} />
@@ -217,19 +217,19 @@ const CumulativeEarnings = ({ data, unit }) => {
       <div className="row text-center">
         <div className="col-6 mb-3">
           <div className="text-muted">Past day</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(earningsDay, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(earningsDay, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Past week</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(earningsWeek, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(earningsWeek, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Past month</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(earningsMonth, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(earningsMonth, unit)}</div>
         </div>
         <div className="col-6 mb-3">
           <div className="text-muted">Total</div>
-          <div style={{ fontSize: "1.25rem" }}>{formatAmount(earningsAll, unit)}</div>
+          <div style={{ fontSize: "1.25em" }}>{formatAmount(earningsAll, unit)}</div>
         </div>
       </div>
       <HighchartsReact highcharts={Highcharts} constructorType={"stockChart"} options={chartOptions} />
