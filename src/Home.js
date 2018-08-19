@@ -325,7 +325,7 @@ class Loans extends Component {
     }
 
     return wrap(
-      <table className="table table-hover bg-white border my-3">
+      <table className="table table-hover text-center bg-white border my-3">
         <thead>
           <tr>
             <th scope="col">Close</th>
