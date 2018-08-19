@@ -7,6 +7,18 @@ const formatAmount = (amount, unit) =>
     ? amount.toLocaleString("en-US", { maximumFractionDigits: 4 }) + " BTC"
     : (1e6 * amount).toLocaleString("en-US", { maximumFractionDigits: 2 }) + " bits";
 
+const formatDuration = days => {
+  let seconds = days * 24 * 60 * 60;
+  days = Math.floor(seconds / (24 * 60 * 60));
+  let hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+  let minutes = Math.floor((seconds % (60 * 60)) / 60);
+  seconds = Math.floor(seconds % 60);
+  hours = hours.toString().padStart(2, "0");
+  minutes = minutes.toString().padStart(2, "0");
+  seconds = seconds.toString().padStart(2, "0");
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+};
+
 const getChartOptions = (name, data, unit) => {
   const decimals = { bitcoin: 8, bits: 2 }[unit];
   const symbol = { bitcoin: "BTC", bits: "bits" }[unit];
@@ -276,12 +288,108 @@ class Earnings extends Component {
   }
 }
 
+class Loans extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [] };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        fetch("loans.json")
+          .then(response => response.json())
+          .then(json => {
+            this.setState({ data: json });
+          }),
+      1000
+    );
+  }
+
+  render() {
+    const wrap = loans => (
+      <Fragment>
+        <div className="h4 text-center my-3">Recent Loans</div>
+        {loans}
+      </Fragment>
+    );
+
+    if (!this.state.data.length) {
+      return wrap(
+        <div className="bg-white border rounded my-3 p-3">
+          <div className="text-center" style={{ fontSize: "1.25em" }}>
+            Loading...
+          </div>
+        </div>
+      );
+    }
+
+    return wrap(
+      <table className="table table-hover bg-white border my-3">
+        <thead>
+          <tr>
+            <th scope="col">Close</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Rate</th>
+            <th scope="col">Earned</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.data
+            .filter(row => row.currency === "BTC")
+            .slice(0, 20)
+            .map((row, i) => (
+              <Fragment key={i}>
+                <tr data-toggle="collapse" data-target={`#collapse-${i}`} style={{ cursor: "pointer" }}>
+                  <td>{row.close}</td>
+                  <td>
+                    {row.amount} {row.currency}
+                  </td>
+                  <td>{(100 * parseFloat(row.rate)).toFixed(4)}%</td>
+                  <td>
+                    {row.earned} {row.currency}
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan="4" className="border-top-0 py-0">
+                    <div id={`collapse-${i}`} className="collapse">
+                      <div style={{ paddingTop: "0.75rem", paddingBottom: "0.75rem" }}>
+                        <div>ID: {row.id}</div>
+                        <div>Open: {new Date(Date.parse(row.open + "Z")).toLocaleString()}</div>
+                        <div>Close: {new Date(Date.parse(row.close + "Z")).toLocaleString()}</div>
+                        <div>Duration: {formatDuration(row.duration)}</div>
+                        <div>
+                          Amount: {row.amount} {row.currency}
+                        </div>
+                        <div>Rate: {(100 * parseFloat(row.rate)).toFixed(4)}%</div>
+                        <div>
+                          Interest: {row.interest} {row.currency}
+                        </div>
+                        <div>
+                          Fee: {row.fee} {row.currency}
+                        </div>
+                        <div>
+                          Earned: {row.earned} {row.currency}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </Fragment>
+            ))}
+        </tbody>
+      </table>
+    );
+  }
+}
+
 class Home extends Component {
   render() {
     return (
       <Fragment>
         <Balance unit={this.props.units.balance} />
         <Earnings unit={this.props.units.earnings} />
+        <Loans />
       </Fragment>
     );
   }
