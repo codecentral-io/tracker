@@ -1,0 +1,8 @@
+{
+  "name": "tracker",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "prettier": "^1.14.2"
+  }
+}
