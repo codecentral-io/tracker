@@ -71,7 +71,7 @@ class Balance extends Component {
   componentDidMount() {
     setTimeout(
       () =>
-        fetch("balance.json")
+        fetch("/api/balance")
           .then(response => response.json())
           .then(json => this.setState({ data: json })),
       1000
@@ -264,7 +264,7 @@ class Earnings extends Component {
   componentDidMount() {
     setTimeout(
       () =>
-        fetch("loans.json")
+        fetch("/api/loans")
           .then(response => response.json())
           .then(json => {
             json.sort((a, b) => Date.parse(a.close) - Date.parse(b.close));
@@ -303,7 +303,7 @@ class Loans extends Component {
   componentDidMount() {
     setTimeout(
       () =>
-        fetch("loans.json")
+        fetch("/api/loans")
           .then(response => response.json())
           .then(json => {
             this.setState({ data: json });
